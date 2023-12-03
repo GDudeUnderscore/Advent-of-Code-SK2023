@@ -1,0 +1,18 @@
+
+function convert(t: text) :: text:
+    loop ("one|two|three|four|five|six|seven|eight|nine") split at "|":
+        add 1 to {_l}
+        replace all loop-value with "%first character of loop-value%%{_l}%%last character of loop-value%" in {_t}
+    return {_t}
+
+function d1p1(t: text) :: num:
+    set {_t::*} to {_t} split at "|"
+    loop {_t::*}:
+        delete {_char}
+        set {_a::*} to convert(loop-value) split at ""
+        loop {_a::*} where [(input parsed as int) is set]:
+            set {_char} to "%{_char} ? ""%%loop-value-2%"
+        add "%first 1 characters of {_char}%%last 1 characters of {_char}%" parsed as int to {_sum}
+    return {_sum}
+
+# Answer: 54019

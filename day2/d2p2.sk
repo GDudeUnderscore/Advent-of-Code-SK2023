@@ -1,0 +1,15 @@
+
+function d2p2(t: text) :: num:    
+    set {_t::*} to {_t} split at "|"
+    loop {_t::*}:
+        delete {_l}, {_id::*}, {_max::*} and {_d::*}
+        set {_l} to loop-value
+        replace all "Game " with "" in {_l}
+        replace all "; " with ", " in {_l}
+        set {_id::*} to {_l} split at ": "
+        set {_values::*} to {_id::2} split at ", "
+        loop {_values::*}:
+            set {_d::*} to loop-value-2 split at " "
+            set {_max::%{_d::2}%} to ({_d::1} parsed as int) if ({_d::1} parsed as int) > {_max::%{_d::2}%} ? 0
+        add {_max::green}*{_max::red}*{_max::blue} to {_sum}
+    return {_sum}

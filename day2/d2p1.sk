@@ -1,0 +1,26 @@
+
+function d2p1(t: text) :: num:
+    loop ("12,red|13,green|14,blue") split at "|":
+        set {_d::*} to loop-value split at ","
+        set {_limit::%{_d::2}%} to {_d::1} parsed as int
+    set {_t::*} to {_t} split at "|"
+    loop {_t::*}:
+        delete {_true}, {_l}, {_id::*}, {_type::*} and {_d::*}
+        set {_l} to loop-value
+        replace all "Game " with "" in {_l}
+        replace all ": " with "/" in {_l}
+        set {_id::*} to {_l} split at "/"
+        set {_values::*} to {_id::2} split at "; "
+        loop {_values::*}:
+            set {_decks::*} to loop-value-2 split at ", "
+            loop {_decks::*}:
+                delete {_checks::*}, {_no}
+                set {_dt::*} to loop-value-3 split at " "
+                add {_dt::1} parsed as int to {_checks::%{_dt::2}%}
+                set {_no} to no if {_checks::%{_dt::2}%} > {_limit::%{_dt::2}%}
+                stop loop if {_no} is set
+            stop loop if {_no} is set
+        add {_id::1} parsed as int to {_sum} if {_no} isn't set
+    return {_sum}
+    
+# Answer: 2285
