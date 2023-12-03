@@ -5,7 +5,7 @@ function convert(t: text) :: text:
         replace all loop-value with "%first character of loop-value%%{_l}%%last character of loop-value%" in {_t}
     return {_t}
 
-function d1p1(t: text) :: num:
+function d1p2(t: text) :: num:
     set {_t::*} to {_t} split at "|"
     loop {_t::*}:
         delete {_char}
